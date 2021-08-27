@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 function NavBar() {
+	const router = useRouter();
 	const isActive = (r) => {
-		const router = useRouter();
 		if (r === router.pathname) {
 			return " active";
 		} else {
