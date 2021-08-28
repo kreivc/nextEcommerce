@@ -76,12 +76,6 @@ export default DetailProduct;
 export async function getServerSideProps({ params: { id } }) {
 	const res = await getData(`product/${id}`);
 
-	if (!res) {
-		return {
-			notFound: true,
-		};
-	}
-
 	return {
 		props: {
 			product: res.product,

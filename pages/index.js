@@ -28,12 +28,6 @@ export default Home;
 export async function getServerSideProps() {
 	const res = await getData("product");
 
-	if (!res) {
-		return {
-			notFound: true,
-		};
-	}
-
 	return {
 		props: {
 			product: res.products,
