@@ -12,7 +12,7 @@ const Home = (props) => {
 				<title>Home Page</title>
 			</Head>
 
-			{products && products.length === 0 ? (
+			{products === null ? (
 				<h2>No Products</h2>
 			) : (
 				products.map((product) => (
