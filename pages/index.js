@@ -26,7 +26,7 @@ const Home = (props) => {
 export default Home;
 
 export async function getServerSideProps() {
-	const res = await getData("/product");
+	const res = await getData("product");
 
 	return {
 		props: {
