@@ -1,10 +1,14 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getData } from "../utils/fetchData";
 import ProductItem from "../components/product/ProductItem";
 
 const Home = (props) => {
 	const [products, setProducts] = useState(props.product);
+
+	useEffect(() => {
+		setProducts(props.products);
+	}, [props.products]);
 
 	return (
 		<div className="products">
@@ -12,7 +16,7 @@ const Home = (props) => {
 				<title>Home Page</title>
 			</Head>
 
-			{products === null ? (
+			{products.length === 0 ? (
 				<h2>No Products</h2>
 			) : (
 				products.map((product) => (
