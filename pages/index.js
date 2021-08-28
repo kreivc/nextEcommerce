@@ -1,14 +1,10 @@
 import Head from "next/head";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getData } from "../utils/fetchData";
 import ProductItem from "../components/product/ProductItem";
 
 const Home = (props) => {
 	const [products, setProducts] = useState(props.product);
-
-	useEffect(() => {
-		setProducts(props.products);
-	}, [props.products]);
 
 	return (
 		<div className="products">
