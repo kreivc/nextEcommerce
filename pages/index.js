@@ -6,8 +6,6 @@ import ProductItem from "../components/product/ProductItem";
 const Home = (props) => {
 	const [products, setProducts] = useState(props.product);
 
-	console.log(products);
-
 	return (
 		<div className="products">
 			<Head>
@@ -28,7 +26,7 @@ const Home = (props) => {
 export default Home;
 
 export async function getServerSideProps() {
-	const res = await getData("product");
+	const res = await getData("/product");
 
 	return {
 		props: {

@@ -26,3 +26,9 @@
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 3;
 }
+
+/* ----- Detail Product ----- */
+.detail_page .active {
+	border-color: orangered;
+	padding: 2px;
+}
