@@ -4,7 +4,7 @@ import { getData } from "../utils/fetchData";
 import ProductItem from "../components/product/ProductItem";
 
 const Home = (props) => {
-	const [products, setProducts] = useState([]);
+	const [products, setProducts] = useState(props.product);
 
 	return (
 		<div className="products">
