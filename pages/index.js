@@ -1,10 +1,14 @@
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getData } from "../utils/fetchData";
 import ProductItem from "../components/product/ProductItem";
 
 const Home = (props) => {
-	const [products, setProducts] = useState(props.product);
+	const [products, setProducts] = useState([]);
+
+	useEffect(() => {
+		setProducts(props.product);
+	}, [products]);
 
 	return (
 		<div className="products">
@@ -26,12 +30,16 @@ const Home = (props) => {
 export default Home;
 
 export async function getServerSideProps() {
-	const res = await getData("product");
+	try {
+		const res = await getData("product");
 
-	return {
-		props: {
-			product: res.products,
-			result: res.result,
-		},
-	};
+		return {
+			props: {
+				product: res.products,
+				result: res.result,
+			},
+		};
+	} catch (err) {
+		console.log(err);
+	}
 }
