@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@badrap/bar-of-progress": "^0.1.2",
     "bcrypt": "^5.0.1",
     "js-cookie": "^3.0.0",
     "jsonwebtoken": "^8.5.1",
