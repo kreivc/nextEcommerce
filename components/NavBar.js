@@ -18,10 +18,11 @@ function NavBar() {
 	};
 
 	const handleLogout = () => {
-		Cookie.remove("refreshToken", { path: "api/auth/accessToken" });
+		Cookie.remove("refreshtoken", { path: "api/auth/accessToken" });
 		localStorage.removeItem("firstLogin");
 		dispatch({ type: "AUTH", payload: {} });
 		dispatch({ type: "NOTIFY", payload: { success: "Logged out!" } });
+		return router.push("/");
 	};
 
 	const loggedRouter = () => {
@@ -31,8 +32,8 @@ function NavBar() {
 					className="nav-link dropdown-toggle"
 					href="#"
 					id="navbarDropdownMenuLink"
-					role="button"
-					data-bs-toggle="dropdown"
+					data-toggle="dropdown"
+					aria-haspopup="true"
 					aria-expanded="false"
 				>
 					<img
@@ -45,110 +46,96 @@ function NavBar() {
 							transform: "translateY(-3px)",
 							marginRight: "3px",
 						}}
-					/>
+					/>{" "}
 					{auth.user.name}
 				</a>
 
-				<ul
+				<div
 					className="dropdown-menu"
 					aria-labelledby="navbarDropdownMenuLink"
 				>
-					<li>
-						<a className="dropdown-item" href="#">
-							Profile
-						</a>
-					</li>
-					<li>
-						<button
-							className="dropdown-item"
-							href="#"
-							onClick={handleLogout}
-						>
-							Logout
-						</button>
-					</li>
-				</ul>
+					<a className="dropdown-item">Profile</a>
+					<div className="dropdown-divider"></div>
+					<button className="dropdown-item" onClick={handleLogout}>
+						Logout
+					</button>
+				</div>
 			</li>
 		);
 	};
 
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light bg-light">
-			<div className="container-fluid">
-				<Link href="/">
-					<a className="navbar-brand">Kreivc</a>
-				</Link>
-				<button
-					className="navbar-toggler"
-					type="button"
-					data-bs-toggle="collapse"
-					data-bs-target="#navbarNavDropdown"
-					aria-controls="navbarNavDropdown"
-					aria-expanded="false"
-					aria-label="Toggle navigation"
-				>
-					<span className="navbar-toggler-icon"></span>
-				</button>
-				<div
-					className="collapse navbar-collapse justify-content-end"
-					id="navbarNavDropdown"
-				>
-					<ul className="navbar-nav p-1">
+			<Link href="/">
+				<a className="navbar-brand">Kreivc</a>
+			</Link>
+			<button
+				className="navbar-toggler"
+				type="button"
+				data-toggle="collapse"
+				data-target="#navbarNavDropdown"
+				aria-controls="navbarNavDropdown"
+				aria-expanded="false"
+				aria-label="Toggle navigation"
+			>
+				<span className="navbar-toggler-icon"></span>
+			</button>
+			<div
+				className="collapse navbar-collapse justify-content-end"
+				id="navbarNavDropdown"
+			>
+				<ul className="navbar-nav p-1">
+					<li className="nav-item">
+						<Link href="/cart">
+							<a
+								className={"nav-link" + isActive("/cart")}
+								aria-current="page"
+								href="#"
+							>
+								<span className="fa-layers fa-fw">
+									<i
+										className="fas fa-shopping-cart"
+										aria-hidden="true"
+									></i>
+									<span
+										className="fa-layers-counter"
+										style={{
+											padding: "8px",
+											background: "#ed143dc2",
+											borderRadius: "50%",
+											top: "-7px",
+											right: "-7px",
+											color: "white",
+											fontSize: "42px",
+										}}
+									>
+										{cart.length}
+									</span>
+								</span>
+								Cart
+							</a>
+						</Link>
+					</li>
+					{Object.keys(auth).length === 0 ? (
 						<li className="nav-item">
-							<Link href="/cart">
+							<Link href="/signin">
 								<a
-									className={"nav-link" + isActive("/cart")}
+									className={"nav-link" + isActive("/signin")}
 									aria-current="page"
 									href="#"
 								>
-									<span className="fa-layers fa-fw">
-										<i
-											className="fas fa-shopping-cart"
-											aria-hidden="true"
-										></i>
-										<span
-											className="fa-layers-counter"
-											style={{
-												padding: "8px",
-												background: "#ed143dc2",
-												borderRadius: "50%",
-												top: "-7px",
-												right: "-7px",
-												color: "white",
-												fontSize: "42px",
-											}}
-										>
-											{cart.length}
-										</span>
-									</span>
-									Cart
+									<i
+										className="fas fa-user"
+										aria-hidden="true"
+									></i>
+									Sign In
 								</a>
 							</Link>
 						</li>
-
-						{Object.keys(auth).length === 0 ? (
-							<li className="nav-item">
-								<Link href="/signin">
-									<a
-										className={
-											"nav-link" + isActive("/signin")
-										}
-										aria-current="page"
-										href="#"
-									>
-										<i
-											className="fas fa-user"
-											aria-hidden="true"
-										></i>
-										Sign In
-									</a>
-								</Link>
-							</li>
-						) : (
-							loggedRouter()
-						)}
-					</ul>
-				</div>
+					) : (
+						loggedRouter()
+					)}
+				</ul>
 			</div>
 		</nav>
 	);
