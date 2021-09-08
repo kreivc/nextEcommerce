@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { postData } from "../utils/fetchData";
 
 const paypalBtn = ({ total, address, mobile, state, dispatch }) => {
 	const refPaypalBtn = useRef();
@@ -21,12 +22,33 @@ const paypalBtn = ({ total, address, mobile, state, dispatch }) => {
 				},
 				onApprove: function (data, actions) {
 					// This function captures the funds from the transaction.
+					dispatch({
+						type: "NOTIFY",
+						payload: { loading: true },
+					});
+
 					return actions.order.capture().then(function (details) {
+						postData(
+							"order",
+							{ address, mobile, cart, total },
+							auth.token
+						).then((res) => {
+							if (res.err)
+								return dispatch({
+									type: "NOTIFY",
+									payload: { error: res.err },
+								});
+
+							dispatch({
+								type: "ADD_CART",
+								payload: [],
+							});
+							dispatch({
+								type: "NOTIFY",
+								payload: { success: res.msg },
+							});
+						});
 						// This function shows a transaction success message to your buyer.
-						alert(
-							"Transaction completed by " +
-								details.payer.name.given_name
-						);
 					});
 				},
 			})
