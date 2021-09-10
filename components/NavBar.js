@@ -50,11 +50,10 @@ function NavBar() {
 					{auth.user.name}
 				</a>
 
-				<div
-					className="dropdown-menu"
-					aria-labelledby="navbarDropdownMenuLink"
-				>
-					<a className="dropdown-item">Profile</a>
+				<div className="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<Link href="/profile">
+						<a className="dropdown-item">Profile</a>
+					</Link>
 					<div className="dropdown-divider"></div>
 					<button className="dropdown-item" onClick={handleLogout}>
 						Logout
@@ -93,10 +92,7 @@ function NavBar() {
 								href="#"
 							>
 								<span className="fa-layers fa-fw">
-									<i
-										className="fas fa-shopping-cart"
-										aria-hidden="true"
-									></i>
+									<i className="fas fa-shopping-cart" aria-hidden="true"></i>
 									<span
 										className="fa-layers-counter"
 										style={{
@@ -124,10 +120,7 @@ function NavBar() {
 									aria-current="page"
 									href="#"
 								>
-									<i
-										className="fas fa-user"
-										aria-hidden="true"
-									></i>
+									<i className="fas fa-user" aria-hidden="true"></i>
 									Sign In
 								</a>
 							</Link>
