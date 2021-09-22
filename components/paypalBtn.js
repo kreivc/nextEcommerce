@@ -6,10 +6,9 @@ const paypalBtn = ({ total, address, mobile, state, dispatch }) => {
 	const { cart, auth, orders } = state;
 
 	useEffect(() => {
-		paypal
+		window.paypal
 			.Buttons({
-				createOrder: function (data, actions) {
-					// This function sets up the details of the transaction, including the amount and line item details.
+				createOrder: function (data, actions, err) {
 					return actions.order.create({
 						purchase_units: [
 							{
@@ -21,7 +20,6 @@ const paypalBtn = ({ total, address, mobile, state, dispatch }) => {
 					});
 				},
 				onApprove: function (data, actions) {
-					// This function captures the funds from the transaction.
 					dispatch({
 						type: "NOTIFY",
 						payload: { loading: true },
@@ -59,12 +57,13 @@ const paypalBtn = ({ total, address, mobile, state, dispatch }) => {
 								payload: { success: res.msg },
 							});
 						});
-						// This function shows a transaction success message to your buyer.
 					});
+				},
+				onError: (err) => {
+					console.log(err);
 				},
 			})
 			.render(refPaypalBtn.current);
-		//This function displays Smart Payment Buttons on your web page.
 	}, []);
 
 	return <div ref={refPaypalBtn}></div>;
