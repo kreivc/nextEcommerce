@@ -6,7 +6,7 @@ const paypalBtn = ({ total, address, mobile, state, dispatch }) => {
 	const { cart, auth, orders } = state;
 
 	useEffect(() => {
-		window.paypal
+		paypal
 			.Buttons({
 				createOrder: function (data, actions, err) {
 					return actions.order.create({
