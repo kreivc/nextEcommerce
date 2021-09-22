@@ -4,6 +4,7 @@ import { DataContext } from "../store/GlobalState";
 import valid from "../utils/valid";
 import { patchData } from "../utils/fetchData";
 import { imageUpload } from "../utils/imageUpload";
+import Link from "next/link";
 
 const Profile = () => {
 	const initialState = {
@@ -17,7 +18,7 @@ const Profile = () => {
 	const { avatar, name, password, cf_password } = data;
 
 	const { state, dispatch } = useContext(DataContext);
-	const { auth, notify } = state;
+	const { auth, notify, orders } = state;
 
 	useEffect(() => {
 		if (auth.user) setData({ ...data, name: auth.user.name });
@@ -199,7 +200,47 @@ const Profile = () => {
 				</div>
 
 				<div className="col-md-8">
-					<h3>Orders</h3>
+					<h3 className="text-uppercase">Orders</h3>
+					<div className="my-3 table-responsive">
+						<table
+							className="table-bordered table-hover w-100 text-uppercase"
+							style={{ minWidth: "600px", cursor: "pointer" }}
+						>
+							<thead className="bg-light font-weight-bold">
+								<tr>
+									<td className="p-2">id</td>
+									<td className="p-2">date</td>
+									<td className="p-2">total</td>
+									<td className="p-2">delivered</td>
+									<td className="p-2">action</td>
+								</tr>
+							</thead>
+
+							<tbody>
+								{orders.map(({ _id, createdAt, total, delivered }) => (
+									<tr key={_id}>
+										<td className="p-2">{_id}</td>
+										<td className="p-2">
+											{new Date(createdAt).toLocaleDateString()}
+										</td>
+										<td className="p-2">${total}</td>
+										<td className="p-2">
+											{delivered ? (
+												<i className="fas fa-check text-success"></i>
+											) : (
+												<i className="fas fa-times text-danger"></i>
+											)}
+										</td>
+										<td className="p-2">
+											<Link href={`/order/${_id}`}>
+												<a>details</a>
+											</Link>
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</section>
 		</div>

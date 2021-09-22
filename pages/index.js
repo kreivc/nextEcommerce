@@ -4,7 +4,7 @@ import { getData } from "../utils/fetchData";
 import ProductItem from "../components/product/ProductItem";
 
 const Home = (props) => {
-	const [products, setProducts] = useState(props.product);
+	const [products, setProducts] = useState(props.products);
 
 	return (
 		<div className="products">
@@ -31,7 +31,7 @@ export async function getServerSideProps() {
 
 		return {
 			props: {
-				product: res.products,
+				products: res.products,
 				result: res.result,
 			},
 		};

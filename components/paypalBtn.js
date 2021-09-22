@@ -3,7 +3,7 @@ import { postData } from "../utils/fetchData";
 
 const paypalBtn = ({ total, address, mobile, state, dispatch }) => {
 	const refPaypalBtn = useRef();
-	const { cart, auth } = state;
+	const { cart, auth, orders } = state;
 
 	useEffect(() => {
 		paypal
@@ -43,6 +43,17 @@ const paypalBtn = ({ total, address, mobile, state, dispatch }) => {
 								type: "ADD_CART",
 								payload: [],
 							});
+
+							const newOrder = {
+								...res.newOrder,
+								user: auth.user,
+							};
+
+							dispatch({
+								type: "ADD_ORDERS",
+								payload: [...orders, newOrder],
+							});
+
 							dispatch({
 								type: "NOTIFY",
 								payload: { success: res.msg },
